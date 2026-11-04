@@ -1,0 +1,312 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #03040c;
+    color: #e2e8f0;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-cinzel {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.03em;
+  }
+}
+
+/* 3D Perspective & Spatial transforms */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.perspective-1500 {
+  perspective: 1500px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.translate-z-8 {
+  transform: translateZ(8px);
+}
+
+.translate-z-16 {
+  transform: translateZ(16px);
+}
+
+.translate-z-24 {
+  transform: translateZ(24px);
+}
+
+.translate-z-36 {
+  transform: translateZ(36px);
+}
+
+.translate-z-48 {
+  transform: translateZ(48px);
+}
+
+/* Custom glow utilities */
+.glow-gold-sm {
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+}
+
+.glow-gold {
+  box-shadow: 0 0 30px rgba(234, 179, 8, 0.45), inset 0 0 15px rgba(234, 179, 8, 0.15);
+}
+
+.glow-gold-lg {
+  box-shadow: 0 0 60px rgba(234, 179, 8, 0.35), inset 0 0 25px rgba(234, 179, 8, 0.2);
+}
+
+.glow-purple {
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.35);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.4);
+}
+
+/* Volumetric 3D Laser Scanning Beam Keyframes */
+@keyframes laserSweep3D {
+  0% {
+    top: 2%;
+    opacity: 0.85;
+    transform: translateZ(20px) scaleX(0.96);
+  }
+  50% {
+    top: 96%;
+    opacity: 1;
+    transform: translateZ(35px) scaleX(1.02);
+  }
+  100% {
+    top: 2%;
+    opacity: 0.85;
+    transform: translateZ(20px) scaleX(0.96);
+  }
+}
+
+.animate-laser-3d {
+  animation: laserSweep3D 3.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+/* Scanning Light Sheet Projection */
+@keyframes lightSheetSweep {
+  0% {
+    transform: translateY(-100%) rotateX(65deg);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(240%) rotateX(65deg);
+    opacity: 0.2;
+  }
+}
+
+.animate-light-sheet {
+  animation: lightSheetSweep 3.6s ease-in-out infinite;
+}
+
+/* Volumetric Laser Sheet Fan & Plane */
+.laser-sheet-fan {
+  background: linear-gradient(
+    180deg,
+    rgba(251, 191, 36, 0.02) 0%,
+    rgba(251, 191, 36, 0.12) 35%,
+    rgba(245, 158, 11, 0.32) 75%,
+    rgba(254, 240, 138, 0.85) 98%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  transform-origin: top center;
+}
+
+.laser-beam-core {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(251, 191, 36, 0.3) 10%, 
+    rgba(254, 240, 138, 0.95) 45%, 
+    #ffffff 50%, 
+    rgba(254, 240, 138, 0.95) 55%, 
+    rgba(6, 182, 212, 0.5) 85%, 
+    transparent 100%
+  );
+}
+
+.laser-reflection-sheen {
+  background: radial-gradient(
+    ellipse 80% 40% at 50% 50%,
+    rgba(254, 240, 138, 0.28) 0%,
+    rgba(245, 158, 11, 0.14) 45%,
+    transparent 80%
+  );
+}
+
+
+/* Hologram Scanning Mesh */
+.hologram-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(234, 179, 8, 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(234, 179, 8, 0.18) 1px, transparent 1px);
+}
+
+.hologram-cyan-grid {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.22) 1px, transparent 1px);
+}
+
+.hologram-polar-grid {
+  background: 
+    radial-gradient(circle at 50% 50%, transparent 20%, rgba(234, 179, 8, 0.15) 21%, transparent 22%, transparent 40%, rgba(234, 179, 8, 0.12) 41%, transparent 42%, transparent 65%, rgba(234, 179, 8, 0.1) 66%, transparent 67%),
+    repeating-conic-gradient(from 0deg, rgba(234, 179, 8, 0.08) 0deg 15deg, transparent 15deg 30deg);
+}
+
+/* Antique Gold Typography Suite */
+.text-antique-gold {
+  background: linear-gradient(135deg, #a37a28 0%, #f6e8b4 24%, #dfad36 48%, #fff5c7 72%, #7a5611 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+.text-antique-gold-foil {
+  background: linear-gradient(to right, #916b1e 0%, #d8b257 20%, #fef8db 42%, #c99b2c 68%, #6d4b0d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.9));
+}
+
+.text-antique-gold-shimmer {
+  background: linear-gradient(
+    115deg,
+    #8c6719 0%,
+    #cf9e38 18%,
+    #fff4cc 36%,
+    #dfb03f 52%,
+    #936b1d 70%,
+    #fff8dc 86%,
+    #7a5510 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 7s linear infinite;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85));
+}
+
+.text-gold-leaf {
+  background: linear-gradient(180deg, #fffbeb 0%, #fde047 30%, #ca8a04 70%, #854d0e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #a37a28 0%, #f6e8b4 24%, #dfad36 48%, #fff5c7 72%, #7a5611 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+
+.text-mystic-gradient {
+  background: linear-gradient(135deg, #f3e8ff 0%, #c084fc 45%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes goldShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.02); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Astrolabe dual spin */
+@keyframes spinClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinCounterClockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.animate-astrolabe-cw {
+  animation: spinClockwise 32s linear infinite;
+}
+
+.animate-astrolabe-ccw {
+  animation: spinCounterClockwise 24s linear infinite;
+}
+
+/* Luxe Card Surface with Hairline Gold Foil Edge */
+.card-luxe {
+  background: linear-gradient(135deg, rgba(12, 15, 34, 0.88) 0%, rgba(5, 7, 18, 0.95) 100%);
+  border: 1px solid rgba(234, 179, 8, 0.22);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(254, 240, 138, 0.15);
+}
+
+.card-luxe-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-luxe-hover:hover {
+  border-color: rgba(234, 179, 8, 0.45);
+  box-shadow: 0 16px 50px -10px rgba(234, 179, 8, 0.18), inset 0 1px 0 rgba(254, 240, 138, 0.35);
+  transform: translateY(-3px);
+}
+
+/* Cosmic star background pattern */
+.stars-bg {
+  background-image: 
+    radial-gradient(1.2px 1.2px at 30px 40px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 140px 180px, #f59e0b, rgba(0,0,0,0)),
+    radial-gradient(1.2px 1.2px at 280px 110px, #c084fc, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 380px 260px, #38bdf8, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 480px 150px, #ffffff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 500px 500px;
+}
+
+/* Print styles for downloadable PDF / print reports */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-page-break {
+    page-break-before: always;
+  }
+}

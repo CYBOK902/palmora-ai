@@ -1,0 +1,6 @@
+{
+  "name": "Palmora AI - Professional Palm Reading & Chiromancy Platform",
+  "description": "AI-powered palmistry platform analyzing hand lines, mounts, and signs with computer vision line visualization, comprehensive Hast Rekha reports, left-right hand comparison, and compatibility readings.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
