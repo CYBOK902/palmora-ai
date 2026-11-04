@@ -842,9 +842,9 @@ app.delete('/api/share/:id', shareLimiter, async (req: Request, res: Response) =
   }
 });
 
-app.get('/healthz', (_req, res) => res.status(200).json({ status: 'ok' }));
+app.get(['/healthz', '/api/healthz'], (_req, res) => res.status(200).json({ status: 'ok' }));
 
-app.get('/readyz', async (_req, res) => {
+app.get(['/readyz', '/api/readyz'], async (_req, res) => {
   if (!database) {
     return res.status(process.env.NODE_ENV === 'production' ? 503 : 200)
       .json({ status: process.env.NODE_ENV === 'production' ? 'not-ready' : 'ok' });
@@ -857,10 +857,8 @@ app.get('/readyz', async (_req, res) => {
   }
 });
 
-// Setup Vite in Dev or Static Files in Production
-async function startServer() {
+async function initializeApp() {
   const isProd = process.env.NODE_ENV === 'production';
-
   if (isProd && !ai) {
     throw new Error('GEMINI_API_KEY must be configured in production.');
   }
@@ -869,20 +867,6 @@ async function startServer() {
   }
   if (database) {
     await initializeDatabase();
-  }
-
-  if (!isProd) {
-    const { createServer: createViteServer } = await import('vite');
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
-    app.use(express.static(path.resolve(__dirname, 'dist')));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-    });
   }
 
   app.use((error: any, _req: Request, res: Response, _next: (error?: unknown) => void) => {
@@ -895,13 +879,42 @@ async function startServer() {
     console.error('Unhandled server error:', error);
     return res.status(500).json({ error: 'An unexpected server error occurred.' });
   });
+}
+
+let appInitialization: Promise<void> | undefined;
+export function initializeForServerless() {
+  appInitialization ??= initializeApp();
+  return appInitialization;
+}
+
+async function startServer() {
+  const isProd = process.env.NODE_ENV === 'production';
+  if (isProd) {
+    await initializeForServerless();
+    app.use(express.static(path.resolve(__dirname, 'dist')));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+    });
+  } else {
+    const { createServer: createViteServer } = await import('vite');
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'spa',
+    });
+    app.use(vite.middlewares);
+    await initializeApp();
+  }
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Palmora AI server running on http://0.0.0.0:${PORT}`);
   });
 }
 
-startServer().catch((error) => {
-  console.error('Server startup failed:', error);
-  process.exitCode = 1;
-});
+export default app;
+
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  startServer().catch((error) => {
+    console.error('Server startup failed:', error);
+    process.exitCode = 1;
+  });
+}

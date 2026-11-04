@@ -64,6 +64,17 @@ Use the provider's supported PostgreSQL TLS settings for `DATABASE_URL`. Keep cr
 
 Do not use an ephemeral/free database for share links; select a plan with the required persistence and backup behavior. Review current Render plan limits and pricing before creating paid resources.
 
+## Deploy on Vercel
+
+The repository includes Vercel configuration for the Vite frontend and an Express serverless function for the API.
+
+1. Import this GitHub repository into Vercel, or run `vercel` from the repository root.
+2. Set `GEMINI_API_KEY` and `DATABASE_URL` in the Vercel project's environment variables. Use a managed PostgreSQL provider such as Neon and its pooled connection URL.
+3. Optionally set `GEMINI_MODEL` and `GEMINI_FALLBACK_MODEL`. Vercel provides `PORT` as needed; `TRUST_PROXY_HOPS` is not required for this deployment.
+4. Deploy and verify `/`, `/api/healthz`, `/api/readyz`, AI readings, and share-link creation. The first request to `/api/readyz` also verifies the database connection.
+
+The API function is configured for a 60-second maximum duration. Vercel Functions have request-size, execution-time, and usage limits that vary by plan; check the current Vercel limits against image-based requests before launch. A Vercel deployment does not make Gemini API usage or a separately hosted database free.
+
 ## Deploy with Docker
 
 Build and test the production image:
